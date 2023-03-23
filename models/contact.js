@@ -4,7 +4,7 @@ const Joi = require('joi')
 const {handleMongooseError} = require("../helpers")
 
 const nameRegex = /^[A-Z][a-z]+ [A-Z][a-z]+$/
-const emailMinDomainSegments = { minDomainSegments: 2, }
+const emailMinDomainSegments = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const phonePattern = /^\(\d{3}\)\s\d{3}-\d{4}$/
 
 const contactSchema = new Schema({
@@ -35,7 +35,7 @@ const contactSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user',
         required: true,
-    },
+    }
 },
 {versionKey: false, timestamps: true})
 
