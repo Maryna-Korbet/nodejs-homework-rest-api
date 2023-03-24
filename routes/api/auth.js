@@ -2,13 +2,17 @@ const express = require('express')
 
 const ctrl = require("../../controllers/auth")
 
-const {validateBody, authenticate, validateSubscription, upload} = require("../../middlewares")
+const {validateBody, authenticate, validateSubscription, upload, validateEmail} = require("../../middlewares")
 
 const {schemas} = require("../../models/user")
 
 const router = express.Router()
 
 router.post("/register", validateBody(schemas.registerSchema), ctrl.register)
+
+router.get("/verify/:verificationToken", ctrl.verifyEmail)
+
+router.post("/verify", validateEmail, validateBody(schemas.emailSchema), ctrl.resendVerifyEmail)
 
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login)
 
